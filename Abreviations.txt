@@ -1,0 +1,24 @@
+Inputs = communication 3-tuples (sender, receiver, time)
+Outputs = (oriented) behavioral trust graph T
+Dataset = twitter 10 weeks public communications (2M users, 1910K senders, 230K tweets/day)
+
+w_ij = edge weight between node i and j in T
+A, B = a pair of users
+M = sorted list of times when message exchanged
+C = list of conversations (groups of messages)
+
+T_c = conversational trust graph
+T_c(A,B) = conversational trust between A and B (summed conversation length times balance)
+H(C_i) = mesure of the balance in conversation C_i (entropy function)
+p(C_i) = fraction of message in the conversation sent by A
+
+delta = time interval for propagation to a third person
+m_AB = number of message A sent to B
+prop_B = number of propagations by B
+prop_AB = number of messages A sent to B that were propagated
+T_p = directed propagation trust graph
+T_p(B,A) = propagation trust B is giving to A (measured by i or ii)
+
+T_r = directed propagation trust graph based on retweets
+
+PS : "_" means indice
