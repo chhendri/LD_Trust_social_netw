@@ -1,0 +1,3 @@
+Documentation : http://docs.tweepy.org/en/latest/
+Installation command : python3.6 -m pip install tweepy
+(replace 3.6 by your version of python, can be obtained with "python --version")
