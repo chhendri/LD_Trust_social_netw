@@ -1,0 +1,2 @@
+- Conversational trust might not really be a measure of trust. On social networks, poeple tend to confront their point of view and argue in their favour more thant having true deep conversations.
+- The network algorithm might introduce a bias in interactions between people as it is usually made to present to the user only content based on previous preferences.
