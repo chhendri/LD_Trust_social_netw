@@ -11,3 +11,22 @@ Folder organisation :
     contains the code for building the trust networks based on one of the input in dataset
     
 Feel free to add new branches if you want to modify the code and commit to master brache after review
+
+
+PV Mardi 29:
+
+  - Algorithme
+      -[conversionnal trust (fini mais non testé)]
+      -[propagationnal trust (non fait)]
+  - database
+      -[Scale free (fini)]
+      -[Random Network (fini)]
+      -[database twiter (en attente de la réponse de twiter)]
+      -[database pour testé nos algorithme (Mathieu pour critères)]
+  - Synthèse
+  - Critique/amélioration
+  - posterité
+  - Mail
+      -[renvoyer mail au adresse eroner (Mathieu)]
+      -[mail prof réseau dadabase + réseau]
+      
