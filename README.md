@@ -16,17 +16,18 @@ Feel free to add new branches if you want to modify the code and commit to maste
 PV Mardi 29:
 
   - Algorithme
-      -[conversionnal trust (fini mais non testé)]
-      -[propagationnal trust (non fait)]
+      -[] conversionnal trust (fini mais non testé)
+      -[] propagationnal trust (non fait) (Charlotte)
   - database
-      -[Scale free (fini)]
-      -[Random Network (fini)]
-      -[database twiter (en attente de la réponse de twiter)]
-      -[database pour testé nos algorithme (Mathieu pour critères)]
-  - Synthèse
-  - Critique/amélioration
-  - posterité
+      -[] Scale free (fini)
+      -[] Random Network (fini)
+      -[] Find other database (Oli)
+      -[] database twiter (en attente de la réponse de twiter) (Charlotte)
+      -[] database pour testé nos algorithme (Mathieu pour critères)
+  - Synthèse (Oli)
+  - Critique/amélioration 
+  - posterité (Mathieu)
   - Mail
-      -[renvoyer mail au adresse eroner (Mathieu)]
-      -[mail prof réseau dadabase + réseau]
+      -[] renvoyer mail au adresse eroner (Mathieu)
+      -[] mail prof réseau dadabase + réseau (Mathieu)
       
