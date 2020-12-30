@@ -38,7 +38,6 @@ class Propagation_Trust_AB(object):
         i_A = self.incoming_A()
         # Times A sent messages
         t_sA = self.__list_times(s_A)
-        print(t_sA)
         # Times A received messages
         t_iA = self.__list_times(i_A)
 
@@ -54,14 +53,31 @@ class Propagation_Trust_AB(object):
                     max_props.append((i_A[i],s_A[s]))
         return max_props
 
+    # TODO def statistically significant
+
     def propagations_AB(self):
         """Statistically significant propagations between A and B"""
         # All propagations of A
         all_props_A = self.all_propagations_A()
         # Subset being the propagations between A and B (from B to A)
         potential_props_AB = [i for i in all_props_A if i[0] == self.B]
+        # TODO if propagations are significant
+
         return potential_props_AB
 
+    def trust_weight(self, props):
+        # number of messages B sent to A
+        B_to_A = [i for i in self.incoming_A() if i[0] == self.B]
+        m_AB = len(B_to_A)
+        # number of propagations by A
+        prop_A = len(self.all_propagations_A())
+        # number of messages B sent to A that were propagated by A
+        prop_AB = len(self.propagations_AB())
+        # Quantification of the propagation energy used by A to propagate messages from B
+        energy_AB_prop = prop_AB/prop_A
+        # Fraction of the messages sent by B that A propagated
+        frac_AB_prop = prop_AB/m_AB
+        return energy_AB_prop, frac_AB_prop
 
 
 
