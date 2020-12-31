@@ -17,7 +17,7 @@ PV Mardi 29:
 
   - Algorithme
       - [x] Conversionnal trust (Charlotte)
-      - [x] Propagationnal trust (Charlotte)
+      - [ ] Propagationnal trust (Charlotte)
   - Database
       - [x] Scale free (fini)
       - [x] Random Network (fini)
