@@ -65,19 +65,40 @@ class Propagation_Trust_AB(object):
 
         return potential_props_AB
 
-    def trust_weight(self, props):
+    def trust_weight(self):
         # number of messages B sent to A
         B_to_A = [i for i in self.incoming_A() if i[0] == self.B]
         m_AB = len(B_to_A)
         # number of propagations by A
         prop_A = len(self.all_propagations_A())
+        print(prop_A)
         # number of messages B sent to A that were propagated by A
         prop_AB = len(self.propagations_AB())
+        print(prop_AB)
         # Quantification of the propagation energy used by A to propagate messages from B
         energy_AB_prop = prop_AB/prop_A
         # Fraction of the messages sent by B that A propagated
         frac_AB_prop = prop_AB/m_AB
         return energy_AB_prop, frac_AB_prop
 
+
+class Propagation_trust(Propagation_Trust_AB):
+    def __init__(self, Input):
+        self.input = Input
+
+    def __agent_pairs(self):
+        """All existing agent pairs"""
+        return set([(i[0], i[1]) for i in self.input])
+
+    def prop_trust(self):
+        """Dictionary of the agents and their conversations """
+        trust = {}
+        agents = self.__agent_pairs()
+        for a in agents:
+            p = Propagation_Trust_AB(self.input, a[0], a[1])
+            # If a propagation between A and B exists, compute the trust
+            if len(p.propagations_AB()) > 1:
+                trust = self.trust_weight()[0]
+        return trust
 
 
