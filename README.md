@@ -23,12 +23,12 @@ PV Mardi 29:
       - [x] Random Network (fini)
       - [x] Find other database (Oli)
       - [x] Database twiter (Oli)
-      - [ ] Database pour testé nos algorithme (Mathieu pour critères)
+      - [X] Database pour testé nos algorithme (Mathieu pour critères)
   - Article
       - [ ] Synthèse (Oli)
       - [ ] Critique/amélioration 
       - [ ] Posterité (Mathieu)
   - Mail
-      - [ ] renvoyer mail au adresse eroner (Mathieu)
-      - [ ] mail prof réseau dadabase + réseau (Mathieu)
+      - [X] renvoyer mail au adresse eroner (Mathieu)
+      - [X] mail prof réseau dadabase + réseau (Mathieu)
       
