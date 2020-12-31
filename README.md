@@ -21,7 +21,7 @@ PV Mardi 29:
   - database
       - [x] Scale free (fini)
       - [x] Random Network (fini)
-      - [ ] Find other database (Oli)
+      - [x] Find other database (Oli)
       - [x] database twiter (en attente de la réponse de twiter) (Olivier)
       - [ ] database pour testé nos algorithme (Mathieu pour critères)
   - Synthèse (Oli)
