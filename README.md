@@ -32,3 +32,11 @@ PV Mardi 29:
       - [X] renvoyer mail au adresse eroner (Mathieu)
       - [X] mail prof réseau dadabase + réseau (Mathieu)
       
+    Rédaction:
+    
+    Le template tourne sur overleaf
+    
+    voici le lien du test sur overleaf (lien editable) si on veut le transformer pour notre propre atricle:
+    
+    https://www.overleaf.com/9159162312rffzgxcygwyf
+      
