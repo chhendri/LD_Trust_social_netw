@@ -18,15 +18,16 @@ PV Mardi 29:
   - Algorithme
       - [x] conversionnal trust (Charlotte)
       - [x] propagationnal trust (Charlotte)
-  - database
+  - Database
       - [x] Scale free (fini)
       - [x] Random Network (fini)
       - [x] Find other database (Oli)
       - [x] database twiter (en attente de la réponse de twiter) (Olivier)
       - [ ] database pour testé nos algorithme (Mathieu pour critères)
-  - Synthèse (Oli)
-  - Critique/amélioration 
-  - posterité (Mathieu)
+  - Article
+      - Synthèse (Oli)
+      - Critique/amélioration 
+      - posterité (Mathieu)
   - Mail
       - [ ] renvoyer mail au adresse eroner (Mathieu)
       - [ ] mail prof réseau dadabase + réseau (Mathieu)
