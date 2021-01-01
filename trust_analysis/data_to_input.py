@@ -1,8 +1,6 @@
 import pandas as pd
 import datetime
 import time
-import pickle
-
 
 
 class Twitter_to_Input(object):
