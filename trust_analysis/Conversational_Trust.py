@@ -3,7 +3,7 @@ from math import log
 from Random_input_generator import Random_input
 
 class Conversation_AB(object):
-    def __init__(self, Input, a, b, s=0.1):
+    def __init__(self, Input, a, b, s=100):
         # Input: set of tuples (sender, receiver, time)
         self.input = Input
         # Criteria to say if two messages are in the same conversation
@@ -15,7 +15,7 @@ class Conversation_AB(object):
         """List of the interactions between A and B"""
         return [i for i in self.input if (i[0] == self.A and i[1] == self.B) or (i[0] == self.B and i[1] == self.A)]
 
-    def message_set(self):
+    def message_list(self):
         """List of times at which a message was exchanged between the two agents A and B"""
         interactions = self.__interactions_AB()
         # Sorted list of times of these interactions
@@ -32,23 +32,15 @@ class Conversation_AB(object):
         C = []
         # Average time between messages
         tau = self.__average_time_messages(M)
-
         for i in range(len(M)-1):
             # Define t_i and t_i+1
             t_i = M[i]; t_i1 = M[i+1]
             # Criteria for these two messages being in the same conversation
             if (t_i1 - t_i) < (self.S * tau):
                 # Add message to the conversation
-                C[-1].add(t_i1)
-            else:
-                # Make new conversation
-                C.append(set())
-        # Retain only conversations of more than 2 messages
-        for i in C:
-            if len(i) < 2:
-                C.remove(i)
+                C.append(t_i1)
         # Look if C is empty
-        if len(C) != 0:
+        if len(C) >= 2:
             return C
 
     def __fraction_a(self, conv):
@@ -60,27 +52,29 @@ class Conversation_AB(object):
         for i in interactions:
             inters[i[2]] = (i[0], i[1])
         # Number of times A was the sender
-        #print(conv)
         for t in conv:
             if inters[t][0] == self.A:
                 n_a += 1
-            #print(t)
         return n_a/len(conv)
 
     def __entropy_func(self, conv):
         """Entropy function giving the balance of the conversation"""
         # Fraction of messages coming from A
         p = self.__fraction_a(conv)
-        return ((-p * log(p)) - ((1-p) * log(1-p)))
+        if p == 1:
+            return (-p * log(p))
+        if p == 0:
+            return -((1-p) * log(1-p))
+        else:
+            return ((-p * log(p)) - ((1-p) * log(1-p)))
 
     def conv_trust_AB(self):
         """Trust between the agents A and B"""
         tc = []
         # Conversations
-        convs = self.conv(self.message_set())
+        convs = self.conv(self.message_list())
         # Trust between A and B
-        for c in convs:
-            tc.append(len(c) * self.__entropy_func(c))
+        tc.append(len(convs) * self.__entropy_func(convs))
         return sum(tc)
 
 
@@ -101,7 +95,8 @@ class Conversational_Trust(Conversation_AB):
         for a in agents:
             c = Conversation_AB(self.input, a[0], a[1])
             # If a conversation between A and B exists, compute the trust
-            if c.conv(c.message_set()) != None:
+            if c.conv(c.message_list()) != None:
                 trust[a] = c.conv_trust_AB()
         return trust
+
 
