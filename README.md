@@ -44,8 +44,8 @@ PV Mardi 29:
     
     PV vendredi 01:
     code
-    - [ ] Formater Nron dataset (charlotte)
-    - [ ] tester algo sur Nron dataset (guillaume et charlotte)
+    - [x] Formater Enron dataset (charlotte)
+    - [ ] tester algo sur Enron dataset (guillaume et charlotte)
     - [ ] debug propagession trust (guillaume)
     - [ ] adapter les donner synthétique pour communication (mathieu)
     - [ ] tester algo sur donné synthétique (Mathieu)
