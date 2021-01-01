@@ -15,7 +15,7 @@ class Conversation_AB(object):
         """List of the interactions between A and B"""
         return [i for i in self.input if (i[0] == self.A and i[1] == self.B) or (i[0] == self.B and i[1] == self.A)]
 
-    def message_set(self):
+    def message_list(self):
         """List of times at which a message was exchanged between the two agents A and B"""
         interactions = self.__interactions_AB()
         # Sorted list of times of these interactions
@@ -29,7 +29,7 @@ class Conversation_AB(object):
 
     def conv(self, M):
         """List of sets grouping the messages by conversations"""
-        C = {}
+        C = []
         # Average time between messages
         tau = self.__average_time_messages(M)
         for i in range(len(M)-1):
@@ -37,14 +37,8 @@ class Conversation_AB(object):
             t_i = M[i]; t_i1 = M[i+1]
             # Criteria for these two messages being in the same conversation
             if (t_i1 - t_i) < (self.S * tau):
-                if i in C.keys():
-                    # Add message to the conversation
-                    C[i].append(t_i1)
-                else:
-                    C[i] = [t_i1]
-            else:
-                # Make new conversation
-                C[i] = [t_i1]
+                # Add message to the conversation
+                C.append(t_i1)
         # Look if C is empty
         if len(C) >= 2:
             return C
@@ -78,10 +72,9 @@ class Conversation_AB(object):
         """Trust between the agents A and B"""
         tc = []
         # Conversations
-        convs = self.conv(self.message_set())
+        convs = self.conv(self.message_list())
         # Trust between A and B
-        for c in convs.values():
-            tc.append(len(c) * self.__entropy_func(c))
+        tc.append(len(convs) * self.__entropy_func(convs))
         return sum(tc)
 
 
@@ -102,6 +95,8 @@ class Conversational_Trust(Conversation_AB):
         for a in agents:
             c = Conversation_AB(self.input, a[0], a[1])
             # If a conversation between A and B exists, compute the trust
-            if c.conv(c.message_set()) != None:
+            if c.conv(c.message_list()) != None:
                 trust[a] = c.conv_trust_AB()
         return trust
+
+
