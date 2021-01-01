@@ -32,6 +32,7 @@ PV Mardi 29:
       - [X] renvoyer mail au adresse eroner (Mathieu)
       - [X] mail prof réseau dadabase + réseau (Mathieu)
       
+      
     Rédaction:
     
     Le template tourne sur overleaf
@@ -39,4 +40,21 @@ PV Mardi 29:
     voici le lien du test sur overleaf (lien editable) si on veut le transformer pour notre propre atricle:
     
     https://www.overleaf.com/9159162312rffzgxcygwyf
+    
+    
+    PV vendredi 01:
+    code
+    - [ ] Formater Nron dataset (charlotte)
+    - [ ] tester algo sur Nron dataset (guillaume et charlotte)
+    - [ ] debug propagession trust (guillaume)
+    - [ ] adapter les donner synthétique pour communication (mathieu)
+    - [ ] tester algo sur donné synthétique (Mathieu)
+    écrit
+    - [ ] introduction (charlotte)
+    - [ ] matériel et méthode (charlotte)
+    - [ ] resultat (mathieu et charlotte)
+    - [ ] Analyse des résultats du papier et faire le parallèle (mathieu)
+    - [ ] discussion (guillaume et charlotte)
+    - [ ] relire (olivier)
+    
       
