@@ -1,4 +1,5 @@
 import numpy as np
+from data_to_input import Twitter_to_Input
 
 class Node: #node object, connected nodes form a network
     def __init__(self, id):
@@ -35,10 +36,12 @@ class Node: #node object, connected nodes form a network
         return(self.id)
 
     def show_info(self):
-        link = [(self.connections_id[i], self.connections_w[i]) for i in range(len(self.connections_id))]
+        #link = [(self.connections_id[i], self.connections_w[i]) for i in range(len(self.connections_id))]
+        link = [(self.connections_id[i], self.connections_w[i]) for i in range(len(self.connections_id)) if self.connections_w[i]>10]
         print('Id :', self.id,
               ' Deg :', self.get_degree(),
-              ' Link list :', link)
+              #' Link list :', link)
+              ' Max weight :', link)
 
 
 class TwitterNetwork():
@@ -47,7 +50,7 @@ class TwitterNetwork():
         self.node_list=[]
         self.id_list=[]
         for t in tuple_list:
-            if t[0] is not None and t[1] is not None:
+            if isinstance(t[0], str) and isinstance(t[1], str):
                 for x in (t[0],t[1]):
                     if x not in self.id_list:
                         self.id_list.append(x)
@@ -79,14 +82,10 @@ class TwitterNetwork():
         print('Nodes :', len(self.node_list), ' Edges :', self.edges_count())
         print('Highest degree :', max_d, ' Highest weight :', max_w)
         if nodes:
-            for i in self.node_list: i.show_info()
+            for i in self.node_list:
+                if max(i.get_weight())>10 : i.show_info()
 
 
-l = [('a','b',1),
-     ('b','c',2),
-     ('a','c',3),
-     ('d','a',4),
-     ('b','a',4),
-     ('c','b',5)]
-n = TwitterNetwork(l)
+t = Twitter_to_Input("tweeter_data.csv")
+n = TwitterNetwork(t.to_input())
 n.show_info(nodes=True)
