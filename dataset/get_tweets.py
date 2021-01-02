@@ -16,10 +16,10 @@ def show_info(tweet):
     print('Time :', tweet.created_at)
 
 
-consumer_key = 'fFPUHd1CxBfhC4przWK3XodtM'
-consumer_secret = 'v3qHPbRC2Md0y1Ut7vOvuj0guChoItPQpl5GU4R8WMlAEwUVPH'
-access_token = '1343567015194349568-PH2rZnoFB5Uq4uyFtINDgYBkYruMJZ'
-access_token_secret = 'pmPlJ6Wgcspk0Q7tb8aBI8yekcbQLfqcUWQd9WumLVECf'
+consumer_key = 
+consumer_secret = 
+access_token = 
+access_token_secret = 
 auth = tw.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 api = tw.API(auth, wait_on_rate_limit=False, wait_on_rate_limit_notify=True)
