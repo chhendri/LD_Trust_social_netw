@@ -33,6 +33,7 @@ class Random_netw(object):
         # To 3-tuples format
         netw = set()
         for key, value in rd_netw.items():
+            # Add a random time
             time = self.__to_timestamp(randomtimestamp.randomtimestamp())
             for i in value:
                 netw.add((key, i, time))
@@ -96,6 +97,7 @@ class Scale_free_netw(object):
         # To 3-tuples format
         netw = set()
         for key, value in sf_netw.items():
+            # Add a random time
             time = self.__to_timestamp(randomtimestamp.randomtimestamp())
             for i in value:
                 netw.add((key, i, time))
