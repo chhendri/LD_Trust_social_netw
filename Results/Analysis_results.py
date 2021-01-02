@@ -38,6 +38,8 @@ class Analysis_results(object):
         df = pd.DataFrame(df)
         # Plotting
         plt.bar(x=df["conn"], height=df["n"], width=1)
+        plt.xlabel("Number of connections")
+        plt.ylabel("Number of nodes")
         plt.show()
         return df
 
