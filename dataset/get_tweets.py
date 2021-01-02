@@ -27,21 +27,25 @@ api = tw.API(auth, wait_on_rate_limit=False, wait_on_rate_limit_notify=True)
 # Collect tweets
 search_terms = ""
 date_since = "2020-12-23"
-places = api.geo_search(query='Belgium', granularity="country")
-place_id = places[0].id
-tweets = tw.Cursor(api.search, q='{} place:{}'.format(search_terms, place_id),since=date_since).items(1000)
-#tweets = api.search(q='{} place:{}'.format(search_terms, place_id),since=date_since)
+#places = api.geo_search(query='Belgium', granularity="country")
+#place_id = places[0].id
+tweets = tw.Cursor(api.search, q='{}'.format(search_terms),since=date_since, geocode="50.8466,04.3528,10km").items(100000)
 
 # Iterate and print tweets
-info = [[tweet.user.screen_name,
-        tweet.user.id_str,
-        tweet.place.name,
-        tweet.in_reply_to_screen_name,
-        tweet.in_reply_to_user_id_str,
-        #tweet.conversation_id,
-        tweet.is_quote_status,
-        tweet.text.startswith("RT @"),
-        tweet.created_at] for tweet in tweets]
+info = []
+for tweet in tweets:
+    #print(tweet.text)
+    if hasattr(tweet.place, "name"): pl = tweet.place.name
+    else: pl=None
+    info.append([tweet.user.screen_name,
+                 tweet.user.id_str,
+                 pl,
+                 tweet.in_reply_to_screen_name,
+                 tweet.in_reply_to_user_id_str,
+                 #tweet.conversation_id,
+                 tweet.is_quote_status,
+                 tweet.text.startswith("RT @"),
+                 tweet.created_at])
 print(len(info))
 tweet_df = pd.DataFrame(data=info, columns=['user', 'user_id', 'location', 'is_reply_to', 'reply_id', 'is_quoted', 'is_rt', 'time'])
 print(tweet_df)
