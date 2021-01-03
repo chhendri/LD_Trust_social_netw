@@ -13,7 +13,7 @@ class Conversation_AB(object):
 
     def __interactions_AB(self):
         """List of the interactions between A and B"""
-        return [i for i in self.input if (i[0] == self.A and i[1] == self.B) or (i[0] == self.B and i[1] == self.A)]
+        return [i for i in self.input if self.A and self.B in i]
 
     def message_list(self):
         """List of times at which a message was exchanged between the two agents A and B"""
