@@ -3,7 +3,7 @@ from math import log
 from Random_input_generator import Random_input
 
 class Conversation_AB(object):
-    def __init__(self, Input, a, b, s=100):
+    def __init__(self, Input, a, b, s=10000):
         # Input: set of tuples (sender, receiver, time)
         self.input = Input
         # Criteria to say if two messages are in the same conversation
@@ -88,6 +88,19 @@ class Conversational_Trust(Conversation_AB):
         """All existing agent pairs"""
         return set([(i[0], i[1]) for i in self.input])
 
+    def __normalization(self, trust):
+        """Normalisation of the trust values (relative trust)"""
+        # Maximal trust
+        m = max(trust.values())
+
+        norm_trust = {}
+        for key, value in trust.items():
+            norm_val = value / m
+            # Keep only normalised values higher than 0.01
+            if norm_val > 0.01:
+                norm_trust[key] = norm_val
+        return norm_trust
+
     def conv_trust(self):
         """Dictionary of the agents and their conversations """
         trust = {}
@@ -97,6 +110,5 @@ class Conversational_Trust(Conversation_AB):
             # If a conversation between A and B exists, compute the trust
             if c.conv(c.message_list()) != None:
                 trust[a] = c.conv_trust_AB()
+        trust = self.__normalization(trust)
         return trust
-
-
