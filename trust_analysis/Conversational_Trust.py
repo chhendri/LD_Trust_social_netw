@@ -1,3 +1,22 @@
+"""
+Conversational_trust:
+    Input: set of tuples (sender, receiver, time)
+    Inheritance: Conversation_AB
+    Methods: 
+        conv_trust : returns normalised trust graph as a dictionary with keys being the (sender, receiver) pairs and values being the trust between them
+        
+Conversation_AB: 
+    Input: 
+        Input = set of tuples (sender, receiver, time)
+        A = str, agent name
+        B = str, second agent name
+    Methods:
+        message_list: returns list of times when a message was exchanged
+        conv : returns list of times a message was exchanged in a conversation
+        conv_trust_AB: returns float being the conversational trust between agent A and agent B
+"""
+
+
 from random import sample
 from math import log
 from Random_input_generator import Random_input
@@ -28,7 +47,7 @@ class Conversation_AB(object):
         return ((max(M) -min(M))/ len(M))
 
     def conv(self, M):
-        """List of sets grouping the messages by conversations"""
+        """List of messages being in a conversation"""
         C = []
         # Average time between messages
         tau = self.__average_time_messages(M)
