@@ -9,52 +9,30 @@ Folder organisation :
     contains the code used to process the data given as input (TODO). For now it only contains a class for building random inputs.
   - Trust_analysis :
     contains the code for building the trust networks based on one of the input in dataset
+  - Results : 
+    contains the results of Conversational trust and Propagational trust on the Twitter and the Enron dataset, contains random and scale-free networks
     
-Feel free to add new branches if you want to modify the code and commit to master brache after review
+Files:
+  - Dataset:
+      - get_tweets.py : python file to retreive tweets from Belgium (50km around Brussels)
+      - tweeter_data.csv : Twitter dataset
+      - tweeter_data_narrow.csv : another Twitter dataset with a more restricted place (not used in the article)
+      - Enron.csv : Enron e-mail dataset
+      - data_to_input.py : python class to transform the .csv file to a set of 3-tuples (sender, receiver, time) 
+   - Trust analysis:
+      - Conversational_Trust.py : python class for making the conversational trust graph
+      - Propagation_Trust.py: python class for making the propagational trust graph
+      - data_to_input.py: python class for converting the Twitter/Enron dataset to a set of tuples (sender, receiver, time) needed for the algorithms
+      - primary_analysis.txt : Count of the number of interactions between people in the Twitter dataset -> first approach to the trust graph
+   - Results:
+      - Analysis_results.py : python class for analysing the results of the algorithms
+      - Synthetic_netw.py : python class for making random/scale-free networks in order to input them to the algorithms
+      - conversational_trust_enron/twitter : pickle file of the results of conversational trust
+      - propagational_trust_enron/twitter : pickle file of the results of propagational trust
+      - enron/twitter_50_randoms/scale_free : pickle file of 50 graphs with the same number of nodes and or edges as our datasets
+            twitter_50_randoms is a file too big to put on the github, you can send an email to c.hendrickx.bbb@gmail.com and I will kindly provide it to you ;)
+      
+    
 
 
-PV Mardi 29:
 
-  - Algorithme
-      - [x] Conversionnal trust (Charlotte)
-      - [x] Propagationnal trust (Charlotte)
-  - Database
-      - [x] Scale free (fini)
-      - [x] Random Network (fini)
-      - [x] Find other database (Oli)
-      - [x] Database twiter (Oli)
-      - [X] Database pour testé nos algorithme (Mathieu pour critères)
-  - Article
-      - [ ] Synthèse (Oli)
-      - [ ] Critique/amélioration 
-      - [ ] Posterité (Mathieu)
-  - Mail
-      - [X] renvoyer mail au adresse eroner (Mathieu)
-      - [X] mail prof réseau dadabase + réseau (Mathieu)
-      
-      
-    Rédaction:
-    
-    Le template tourne sur overleaf
-    
-    voici le lien du test sur overleaf (lien editable) si on veut le transformer pour notre propre atricle:
-    
-    https://www.overleaf.com/9159162312rffzgxcygwyf
-    
-    
-    PV vendredi 01:
-    code
-    - [x] Formater Enron dataset (charlotte)
-    - [ ] tester algo sur Enron dataset (guillaume et charlotte)
-    - [ ] debug propagession trust (guillaume)
-    - [ ] adapter les donner synthétique pour communication (mathieu)
-    - [ ] tester algo sur donné synthétique (Mathieu)
-    écrit
-    - [ ] introduction (charlotte)
-    - [ ] matériel et méthode (charlotte)
-    - [ ] resultat (mathieu et charlotte)
-    - [ ] Analyse des résultats du papier et faire le parallèle (mathieu)
-    - [ ] discussion (guillaume et charlotte)
-    - [ ] relire (olivier)
-    
-      
