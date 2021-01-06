@@ -1,4 +1,25 @@
-from Random_input_generator import Random_input
+"""
+Propagation_trust:
+    Input: set of 3-tuples (sender, receiver, time)
+    Inherits: from Propagation_Trust_AB
+    Output: Dictionary with keys being the tuples (sender, receiver) and values being the normalized trust between them (float)
+Propagation_Trust_AB:
+    Input: 
+        Input = set of 3-tuples (sender, receiver, time)
+        a = str, name of agent A
+        b = str, name of agent B
+        T_min = minimal time of response for considering a message as a potential propagation (default = 0)
+        T_max = maximal time of response for considering a message as a potential propagation (default = 10)
+    Methods:
+        incoming_A : Messages incoming to A as a dict with keys being the time and values the input tuples (sender, receiver, time)
+        sent_by_A : Messages sent by A as a dict with keys being the time and values the input tuples (sender, receiver, time)
+        all_propagations_A :  All potential propagations of A as a list of tuples
+        propagations_AB : List of propagations between A and B
+        trust_weight : tuple with first element being the energy A spent in propagating messages from B and 
+            the second element being the fraction of messages from B A propagated
+        
+"""
+
 
 class Propagation_Trust_AB(object):
     """B sends message to A who can then propagate it to X"""
@@ -57,7 +78,7 @@ class Propagation_Trust_AB(object):
     # TODO def statistically significant
 
     def propagations_AB(self):
-        """Statistically significant propagations between A and B"""
+        """Propagations between A and B"""
         # All propagations of A
         all_props_A = self.all_propagations_A()
         # Subset being the propagations between A and B (from B to A)
