@@ -1,3 +1,10 @@
+"""
+Twitter_to_Input + Enron_to_Input: 
+    Input: Filename: str of the path to the .csv file containing the Twitter data
+    Methods: to_input: conversion of the .csv file to a set of tuples (sender, receiver, time) 
+"""
+
+
 import pandas as pd
 import datetime
 import time
