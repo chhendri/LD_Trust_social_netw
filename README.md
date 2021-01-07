@@ -27,11 +27,11 @@ Files:
    - Results:
       - Analysis_results.py : python class for analysing the results of the algorithms
       - Synthetic_netw.py : python class for making random/scale-free networks in order to input them to the algorithms
-      - conversational_trust_enron/twitter : pickle file of the results of conversational trust
+      - conversational_trust_enron/twitter : pickle file of the results of conversational trust + test of the algorithm on couple discution
       - propagational_trust_enron/twitter : pickle file of the results of propagational trust
       - enron/twitter_50_randoms/scale_free : pickle file of 50 graphs with the same number of nodes and or edges as our datasets
             twitter_50_randoms is a file too big to put on the github, you can send an email to c.hendrickx.bbb@gmail.com and I will kindly provide it to you ;)
-      
+      - Visual_network_and_histogram: Visualization of the results with network plot and historgram
     
 
 
