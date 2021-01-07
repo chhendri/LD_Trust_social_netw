@@ -131,3 +131,33 @@ class Conversational_Trust(Conversation_AB):
                 trust[a] = c.conv_trust_AB()
         trust = self.__normalization(trust)
         return trust
+
+    
+##########################################################################
+##                         test: couple discution                       ##
+##########################################################################
+
+import seaborn as sb
+import matplotlib.pyplot as plt
+
+
+def martix_gen(n, m):
+    # n : message, m conversation
+    ensemble = set()
+    for j in range(m):
+        p = [200 * i for i in range(m)]
+        for i in range(n):
+            if i%2 ==0:
+                ensemble.add(("bob", "sam", i + p[j]))
+            else:
+                ensemble.add(("sam", "bob", i + p[j]))
+    ens = Conversation_AB(ensemble, 'bob', 'sam')
+    result = ens.conv_trust_AB()
+    return result
+
+
+heat_map = sb.heatmap([[martix_gen(3, 4),martix_gen(6, 4),martix_gen(12, 4)],[martix_gen(3, 2),martix_gen(6, 2),martix_gen(12, 2)],[martix_gen(3, 1),martix_gen(6, 1),martix_gen(12, 1)]],annot=True, cmap="YlGnBu",cbar_kws={'label': 'Trust'}, yticklabels=[4,2,1], xticklabels=[3,6,12])
+plt.title('Evolution of trust as a function of the number of conversations and messages exchanged per conversation:')
+plt.xlabel('number of messages exchanged per conversation')
+plt.ylabel('number of conversations')
+plt.show()
