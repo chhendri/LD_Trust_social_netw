@@ -1,0 +1,281 @@
+'''
+Visualization of the network and the clustering
+Auteur: Mathieu Parmentier
+date: 01/01/2021
+'''
+
+
+from sklearn import cluster
+import networkx as nx
+from collections import defaultdict
+import matplotlib.pyplot as plt
+import matplotlib as plts
+from matplotlib import cm
+import seaborn as sns
+import pandas as pd
+import numpy as np
+from sklearn.metrics.cluster import normalized_mutual_info_score
+from sklearn.metrics.cluster import adjusted_rand_score
+import random
+import string
+import pickle
+from random import sample
+from random import randint, choice, uniform
+from math import log
+from random import randint, random
+import randomtimestamp
+import datetime
+import time
+from random import randint, random
+import randomtimestamp
+import datetime
+import time
+from random import sample
+from math import log
+
+class Conversation_AB(object):
+    def __init__(self, Input, a, b, s=10000):
+        # Input: set of tuples (sender, receiver, time)
+        self.input = Input
+        # Criteria to say if two messages are in the same conversation
+        self.S = s
+        # Agents
+        self.A = a; self.B = b
+
+    def __interactions_AB(self):
+        """List of the interactions between A and B"""
+        return [i for i in self.input if self.A and self.B in i]
+
+    def message_list(self):
+        """List of times at which a message was exchanged between the two agents A and B"""
+        interactions = self.__interactions_AB()
+        # Sorted list of times of these interactions
+        M = [i[2] for i in interactions]
+        M.sort()
+        return M
+
+    def __average_time_messages(self, M):
+        """tau, average time between two messages"""
+        return ((max(M) -min(M))/ len(M))
+
+    def conv(self, M):
+        """List of sets grouping the messages by conversations"""
+        C = []
+        # Average time between messages
+        tau = self.__average_time_messages(M)
+        for i in range(len(M)-1):
+            # Define t_i and t_i+1
+            t_i = M[i]; t_i1 = M[i+1]
+            # Criteria for these two messages being in the same conversation
+            if (t_i1 - t_i) < (self.S * tau):
+                # Add message to the conversation
+                C.append(t_i1)
+        # Look if C is empty
+        if len(C) >= 2:
+            return C
+
+    def __fraction_a(self, conv):
+        """Fraction of the messages sent by A (p)"""
+        n_a = 0
+        inters = {}
+        interactions = self.__interactions_AB()
+        # Dictionnary with keys being the time and values being the agents
+        for i in interactions:
+            inters[i[2]] = (i[0], i[1])
+        # Number of times A was the sender
+        for t in conv:
+            if inters[t][0] == self.A:
+                n_a += 1
+        return n_a/len(conv)
+
+    def __entropy_func(self, conv):
+        """Entropy function giving the balance of the conversation"""
+        # Fraction of messages coming from A
+        p = self.__fraction_a(conv)
+        if p == 1:
+            return (-p * log(p))
+        if p == 0:
+            return -((1-p) * log(1-p))
+        else:
+            return ((-p * log(p)) - ((1-p) * log(1-p)))
+
+    def conv_trust_AB(self):
+        """Trust between the agents A and B"""
+        tc = []
+        # Conversations
+        convs = self.conv(self.message_list())
+        # Trust between A and B
+        tc.append(len(convs) * self.__entropy_func(convs))
+        return sum(tc)
+
+
+class Conversational_Trust(Conversation_AB):
+    def __init__(self, Input):
+        self.input = Input
+
+    def __agent_pairs(self):
+        """All existing agent pairs"""
+        return set([(i[0], i[1]) for i in self.input])
+
+    def __normalization(self, trust):
+        """Normalisation of the trust values (relative trust)"""
+        # Maximal trust
+        m = max(trust.values())
+
+        norm_trust = {}
+        for key, value in trust.items():
+            norm_val = value / m
+            # Keep only normalised values higher than 0.01
+            if norm_val > 0.01:
+                norm_trust[key] = norm_val
+        return norm_trust
+
+    def conv_trust(self):
+        """Dictionary of the agents and their conversations """
+        trust = {}
+        agents = self.__agent_pairs()
+        for a in agents:
+            c = Conversation_AB(self.input, a[0], a[1])
+            # If a conversation between A and B exists, compute the trust
+            if c.conv(c.message_list()) != None:
+                trust[a] = c.conv_trust_AB()
+        trust = self.__normalization(trust)
+        return trust
+
+
+class network(object):
+    def __init__(self, Input):
+        self.input = Input
+        #network
+        self.network = self.__network_generation()
+        #position
+        self.position = nx.spring_layout(self.network)
+        #cluster
+        self.cluster = self.__clustering()
+        #cluster type
+        self.cltype= self.__cluster_type()
+        #cluster frequence
+        self.clfrequence = self.__cluster_frequence()
+
+    def __network_generation(self):
+        reseau = nx.Graph()
+        dico_name = {}
+        flag = 0
+        for i in range(len(self.input.keys())):
+            if self.input[list(self.input.keys())[i]] > 0:
+                for j in range(2):
+                    if list(self.input.keys())[i][j] not in dico_name:
+                        dico_name[list(self.input.keys())[i][j]] = flag
+                        flag += 1
+        for i in range(len(self.input.keys())):
+            if self.input[list(self.input.keys())[i]] > 0:
+                reseau.add_edge(dico_name[list(self.input.keys())[i][0]], dico_name[list(self.input.keys())[i][1]],
+                                weight=1 - (1 / self.input[list(self.input.keys())[i]]))
+        return reseau
+
+
+    def __cluster_display(self,dico_cluster):
+        cluster_number = sorted(list(dico_cluster.keys()))
+        cluster = [0 * c for c in range(len(self.network.nodes))]
+        for i in dico_cluster:
+            for j in range(len(dico_cluster[i])):
+                for g in range(len(dico_cluster[i][j])):
+                    cluster[dico_cluster[i][j][g]] = cluster_number.index(i)
+        return cluster
+
+
+    def __clustering(self):
+        cluster_subgraph = [self.network.subgraph(c).copy() for c in nx.connected_components(self.network)]
+        dico_cluster = {}
+        for i in range(len(cluster_subgraph)):
+            if len(list(cluster_subgraph[i]._adj.keys())) in dico_cluster:
+                dico_cluster[len(list(cluster_subgraph[i]._adj.keys()))].append(sorted(list(cluster_subgraph[i]._adj.keys())))
+            else:
+                dico_cluster[len(list(cluster_subgraph[i]._adj.keys()))] = [list(cluster_subgraph[i]._adj.keys())]
+        y_display = self.__cluster_display(dico_cluster)
+        return y_display
+
+
+    def __cluster_type(self):
+        a = [len(c) for c in sorted(nx.connected_components(self.network), key=len, reverse=True)]
+        return np.unique(a)
+
+
+    def __cluster_frequence(self):
+        result = []
+        a = [len(c) for c in sorted(nx.connected_components(self.network), key=len, reverse=True)]
+        for i in self.cltype:
+            result.append(a.count(i))
+        return result
+
+
+def draw_communities(G, membership, pos):
+    """Draws the nodes to a plot with assigned colors for each individual cluster
+    Parameters
+    ----------
+    G : networkx graph
+    membership : list
+        A list where the position is the student and the value at the position is the student club membership.
+        E.g. `print(membership[8]) --> 1` means that student #8 is a member of club 1.
+    pos : positioning as a networkx spring layout
+        E.g. nx.spring_layout(G)
+    source:https://networkx.org/documentation/stable//reference/convert.html
+    """
+    fig, ax = plt.subplots(figsize=(16, 9))
+
+    # Convert membership list to a dict where key=club, value=list of students in club
+    club_dict = defaultdict(list)
+    for student, club in enumerate(membership):
+        club_dict[club].append(student)
+    print(club_dict)
+
+    # Normalize number of clubs for choosing a color
+    norm = plts.colors.Normalize(vmin=0, vmax=len(club_dict.keys()))
+
+    for club, members in club_dict.items():
+        nx.draw_networkx_nodes(G, pos,
+                               nodelist=members,
+                               node_color=cm.jet(norm(club)),
+                               node_size=500,
+                               alpha=0.8,
+                               ax=ax)
+
+    # Draw edges (social connections) and show final plot
+    plt.title('Random conversational network:')
+    nx.draw_networkx_edges(G, pos, alpha=0.5, ax=ax)
+
+
+f = open("twitter_50_randoms", "rb")
+data_C = pickle.load(f)
+f.close()
+
+# Transforme the set of message (tuple: <sender, reciever, time>) in to a dictionary of trust
+res_type = []
+res_freq = []
+for i in data:
+    net = network(Conversational_Trust(i).conv_trust())
+    res_type.append(net.cltype)
+    res_freq.append(net.clfrequence)
+
+# determine the subcommunity size en their frequence
+av_type = [i for i in range(len(net.position))]
+av_freq = [i*0 for i in range(len(net.position))]
+for x in range(len(net.position)):
+    for y in range(len(res_type)):
+        for z in range(len(res_type[y])):
+            if res_type[y][z] == x:
+                av_freq[x] += res_freq[y][z]
+avs_freq = np.array(av_freq)
+avs_freq = avs_freq/len(res_type)
+
+#do an histogram plot with the result
+plt.bar(av_type, avs_freq)
+plt.title('Distribution of the size of communities according to their frequency for a Random network (equival Enron):')
+plt.xlabel('Size of communities')
+plt.ylabel('Frequency')
+plt.show()
+
+#transforme the data in to network
+net_C = network(data)
+# plot the network
+draw_communities(net_C.network, net_C.cluster, net_C.position)
